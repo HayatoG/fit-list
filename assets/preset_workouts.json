@@ -1,0 +1,302 @@
+{
+    "workouts": [
+        {
+            "id": "day1",
+            "name": "PEITO + TRÍCEPS + ABDÔMEN",
+            "dayOfWeek": "Segunda",
+            "exercises": [
+                {
+                    "id": "1.1",
+                    "name": "Supino reto na máquina",
+                    "alternative": "Supino reto com halteres",
+                    "sets": "4",
+                    "reps": "8-12",
+                    "type": "machine",
+                    "category": "chest"
+                },
+                {
+                    "id": "1.2",
+                    "name": "Supino inclinado máquina",
+                    "alternative": "Inclinado com halteres",
+                    "sets": "3",
+                    "reps": "8-12",
+                    "type": "machine",
+                    "category": "chest"
+                },
+                {
+                    "id": "1.3",
+                    "name": "Crucifixo máquina",
+                    "alternative": "Crucifixo reto com halteres no banco",
+                    "sets": "3",
+                    "reps": "10-12",
+                    "type": "machine",
+                    "category": "chest"
+                },
+                {
+                    "id": "1.4",
+                    "name": "Tríceps na polia com barra",
+                    "alternative": "Tríceps testa com halteres ou corda",
+                    "sets": "3",
+                    "reps": "10-12",
+                    "type": "machine",
+                    "category": "triceps"
+                },
+                {
+                    "id": "1.5",
+                    "name": "Tríceps banco",
+                    "alternative": "Tríceps coice com halteres",
+                    "sets": "3",
+                    "reps": "12",
+                    "type": "bodyweight",
+                    "category": "triceps"
+                },
+                {
+                    "id": "1.6",
+                    "name": "Abdominal na máquina",
+                    "alternative": "Abdominal com peso no peito",
+                    "sets": "3",
+                    "reps": "15",
+                    "type": "machine",
+                    "category": "abs"
+                },
+                {
+                    "id": "1.7",
+                    "name": "Prancha",
+                    "sets": "3",
+                    "timeInSeconds": 60,
+                    "type": "bodyweight",
+                    "category": "abs"
+                }
+            ]
+        },
+        {
+            "id": "day2",
+            "name": "COSTAS + BÍCEPS",
+            "dayOfWeek": "Terça",
+            "exercises": [
+                {
+                    "id": "2.1",
+                    "name": "Puxada na frente (pulldown)",
+                    "alternative": "Pull-over com halter + remada unilateral",
+                    "sets": "4",
+                    "reps": "8-12",
+                    "type": "machine",
+                    "category": "back"
+                },
+                {
+                    "id": "2.2",
+                    "name": "Remada baixa máquina",
+                    "alternative": "Remada curvada com halteres",
+                    "sets": "3",
+                    "reps": "10",
+                    "type": "machine",
+                    "category": "back"
+                },
+                {
+                    "id": "2.3",
+                    "name": "Puxada fechada inversa",
+                    "alternative": "Remada unilateral banco inclinado com halter",
+                    "sets": "3",
+                    "reps": "10-12",
+                    "type": "machine",
+                    "category": "back"
+                },
+                {
+                    "id": "2.4",
+                    "name": "Rosca direta barra ou máquina",
+                    "alternative": "Rosca direta com halteres",
+                    "sets": "3",
+                    "reps": "10-12",
+                    "type": "machine",
+                    "category": "biceps"
+                },
+                {
+                    "id": "2.5",
+                    "name": "Rosca alternada",
+                    "alternative": "Com halteres ou banco inclinado",
+                    "sets": "3",
+                    "reps": "12",
+                    "type": "dumbbell",
+                    "category": "biceps"
+                }
+            ]
+        },
+        {
+            "id": "day3",
+            "name": "PERNAS (Completo)",
+            "dayOfWeek": "Quarta",
+            "exercises": [
+                {
+                    "id": "3.1",
+                    "name": "Cadeira extensora",
+                    "sets": "4",
+                    "reps": "12",
+                    "type": "machine",
+                    "category": "legs"
+                },
+                {
+                    "id": "3.2",
+                    "name": "Leg press",
+                    "alternative": "Agachamento com halteres",
+                    "sets": "4",
+                    "reps": "10",
+                    "type": "machine",
+                    "category": "legs"
+                },
+                {
+                    "id": "3.3",
+                    "name": "Cadeira flexora",
+                    "alternative": "Mesa flexora ou stiff com halteres",
+                    "sets": "3",
+                    "reps": "12",
+                    "type": "machine",
+                    "category": "legs"
+                },
+                {
+                    "id": "3.4",
+                    "name": "Afundo no smith",
+                    "alternative": "Afundo com halteres andando",
+                    "sets": "3",
+                    "reps": "10",
+                    "notes": "cada perna",
+                    "type": "machine",
+                    "category": "legs"
+                },
+                {
+                    "id": "3.5",
+                    "name": "Panturrilha sentado",
+                    "alternative": "Em pé com halter",
+                    "sets": "4",
+                    "reps": "15-20",
+                    "type": "machine",
+                    "category": "calves"
+                }
+            ]
+        },
+        {
+            "id": "day4",
+            "name": "OMBRO + ABDÔMEN",
+            "dayOfWeek": "Quinta",
+            "exercises": [
+                {
+                    "id": "4.1",
+                    "name": "Elevação lateral máquina",
+                    "alternative": "Elevação lateral com halteres",
+                    "sets": "4",
+                    "reps": "12",
+                    "type": "machine",
+                    "category": "shoulders"
+                },
+                {
+                    "id": "4.2",
+                    "name": "Desenvolvimento máquina",
+                    "alternative": "Desenvolvimento com halteres",
+                    "sets": "3",
+                    "reps": "10",
+                    "type": "machine",
+                    "category": "shoulders"
+                },
+                {
+                    "id": "4.3",
+                    "name": "Elevação frontal",
+                    "alternative": "Com halteres ou anilha",
+                    "sets": "3",
+                    "reps": "12",
+                    "type": "machine",
+                    "category": "shoulders"
+                },
+                {
+                    "id": "4.4",
+                    "name": "Crucifixo invertido máquina",
+                    "alternative": "Voador invertido ou bent-over lateral raise",
+                    "sets": "3",
+                    "reps": "12",
+                    "type": "machine",
+                    "category": "shoulders"
+                },
+                {
+                    "id": "4.5",
+                    "name": "Encolhimento de ombros",
+                    "alternative": "Com halteres",
+                    "sets": "3",
+                    "reps": "15",
+                    "type": "machine",
+                    "category": "shoulders"
+                },
+                {
+                    "id": "4.6",
+                    "name": "Elevação de pernas na barra ou banco",
+                    "sets": "3",
+                    "reps": "15",
+                    "type": "bodyweight",
+                    "category": "abs"
+                },
+                {
+                    "id": "4.7",
+                    "name": "Abdominal oblíquo com peso",
+                    "sets": "3",
+                    "reps": "15",
+                    "notes": "cada lado",
+                    "type": "weighted",
+                    "category": "abs"
+                }
+            ]
+        },
+        {
+            "id": "day5",
+            "name": "FULL SUPERIOR (FOCO NO FRACO)",
+            "dayOfWeek": "Sexta",
+            "notes": "Escolha 1-2 exercícios para peito, costas, bíceps, tríceps e ombro. Reforce o grupo que mais quer evoluir.",
+            "exercises": [
+                {
+                    "id": "5.1",
+                    "name": "Supino inclinado",
+                    "sets": "3",
+                    "reps": "10",
+                    "type": "free_weight",
+                    "category": "chest"
+                },
+                {
+                    "id": "5.2",
+                    "name": "Remada curvada",
+                    "sets": "3",
+                    "reps": "10",
+                    "type": "free_weight",
+                    "category": "back"
+                },
+                {
+                    "id": "5.3",
+                    "name": "Rosca direta",
+                    "sets": "3",
+                    "reps": "12",
+                    "type": "free_weight",
+                    "category": "biceps"
+                },
+                {
+                    "id": "5.4",
+                    "name": "Tríceps polia",
+                    "sets": "3",
+                    "reps": "12",
+                    "type": "machine",
+                    "category": "triceps"
+                },
+                {
+                    "id": "5.5",
+                    "name": "Elevação lateral",
+                    "sets": "3",
+                    "reps": "15",
+                    "type": "free_weight",
+                    "category": "shoulders"
+                },
+                {
+                    "id": "5.6",
+                    "name": "Abdômen à escolha",
+                    "sets": "3",
+                    "reps": "15",
+                    "type": "any",
+                    "category": "abs"
+                }
+            ]
+        }
+    ]
+}
