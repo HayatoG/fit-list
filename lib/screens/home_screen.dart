@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (_) {
             final workoutsByDay = widget.workoutStore.workoutsByDay;
             return ListView.builder(
-              padding: EdgeInsets.only(top: 8, bottom: 80),
+              padding: const EdgeInsets.only(top: 8, bottom: 80),
               itemCount: weekDays.length,
               itemBuilder: (context, index) {
                 final day = weekDays[index];
@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () => _showAddWorkoutDialog(context),
           elevation: 2,
           backgroundColor: AppColors.accent,
-          child: Icon(Icons.add, color: AppColors.primary),
+          child: const Icon(Icons.add, color: AppColors.primary),
         ),
       ),
     );
@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
       color: AppColors.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: AppColors.divider),
+        side: const BorderSide(color: AppColors.divider),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -182,11 +182,11 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () => _showAddWorkoutDialog(context, initialDay: day),
         style: OutlinedButton.styleFrom(
           backgroundColor: AppColors.secondary,
-          side: BorderSide(color: AppColors.accent),
+          side: const BorderSide(color: AppColors.accent),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          minimumSize: Size(double.infinity, 48),
+          minimumSize: const Size(double.infinity, 48),
         ),
         child: Text('Add Workout', style: AppStyles.buttonText),
       ),
@@ -206,8 +206,8 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.all(12),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.all(12),
+              decoration: const BoxDecoration(
                 color: AppColors.primary,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
               ),
@@ -224,10 +224,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: TextButton(
                 onPressed: () => _showAddExerciseDialog(context, workout.id),
                 style: TextButton.styleFrom(
-                  backgroundColor: Color(0xFFF5F9FF),
+                  backgroundColor: const Color(0xFFF5F9FF),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
-                    side: BorderSide(color: Color(0xFFD0E4F5)),
+                    side: const BorderSide(color: Color(0xFFD0E4F5)),
                   ),
                 ),
                 child: Text('Add Exercise', style: AppStyles.buttonText),
@@ -242,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildExerciseItem(String workoutId, Exercise exercise) {
     return Observer(
       builder: (_) => Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           border: Border(
             bottom: BorderSide(
               color: AppColors.divider,
@@ -295,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                   icon: Icon(
                     exercise.isGif ? Icons.gif_box : Icons.image,
-                    color: Color(0xFF3BA4E8),
+                    color: const Color(0xFF3BA4E8),
                   ),
                   onPressed: () {
                     showDialog(
@@ -331,32 +331,32 @@ class _HomeScreenState extends State<HomeScreen> {
               controller: nameController,
               decoration: InputDecoration(
                 labelText: 'Workout Name',
-                labelStyle: TextStyle(color: AppColors.text),
+                labelStyle: const TextStyle(color: AppColors.text),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: AppColors.divider),
+                  borderSide: const BorderSide(color: AppColors.divider),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: AppColors.accent),
+                  borderSide: const BorderSide(color: AppColors.accent),
                 ),
                 fillColor: AppColors.primary,
                 filled: true,
               ),
-              style: TextStyle(color: AppColors.text),
+              style: const TextStyle(color: AppColors.text),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             DropdownButtonFormField<String>(
               value: initialDay,
               decoration: InputDecoration(
                 labelText: 'Day of Week',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: BorderSide(color: Color(0xFFD0E4F5)),
+                  borderSide: const BorderSide(color: Color(0xFFD0E4F5)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: BorderSide(color: Color(0xFF3BA4E8)),
+                  borderSide: const BorderSide(color: Color(0xFF3BA4E8)),
                 ),
               ),
               items: weekDays.map((day) {
@@ -402,7 +402,7 @@ class _HomeScreenState extends State<HomeScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             ),
             child: Text('Add', style: AppStyles.buttonText),
           ),
@@ -415,7 +415,8 @@ class _HomeScreenState extends State<HomeScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Add Exercise', style: TextStyle(color: Colors.white)),
+        title:
+            const Text('Add Exercise', style: TextStyle(color: Colors.white)),
         backgroundColor: AppColors.secondary,
         content: SingleChildScrollView(
           child: Column(
@@ -423,49 +424,49 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               TextField(
                 controller: nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Exercise Name',
                   labelStyle: TextStyle(color: Colors.white70),
                 ),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               TextField(
                 controller: setsController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Sets',
                   labelStyle: TextStyle(color: Colors.white70),
                 ),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               TextField(
                 controller: repsController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Reps',
                   labelStyle: TextStyle(color: Colors.white70),
                 ),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               TextField(
                 controller: weightController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Weight (optional)',
                   labelStyle: TextStyle(color: Colors.white70),
                 ),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               DropdownButtonFormField<ExerciseType>(
                 value: selectedType,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Exercise Type',
                   labelStyle: TextStyle(color: Colors.white70),
                   border: OutlineInputBorder(),
                 ),
                 dropdownColor: AppColors.secondary,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 items: ExerciseType.values.map((type) {
                   return DropdownMenuItem(
                     value: type,
@@ -478,16 +479,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               DropdownButtonFormField<ExerciseCategory>(
                 value: selectedCategory,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Category',
                   labelStyle: TextStyle(color: Colors.white70),
                   border: OutlineInputBorder(),
                 ),
                 dropdownColor: AppColors.secondary,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 items: ExerciseCategory.values.map((category) {
                   return DropdownMenuItem(
                     value: category,
@@ -500,7 +501,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               ElevatedButton.icon(
                 onPressed: () async {
                   final pickedMedia = await MediaHelper.pickMedia(context);
@@ -511,10 +512,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
                   }
                 },
-                icon: Icon(Icons.add_photo_alternate),
-                label: Text('Add Image/GIF'),
+                icon: const Icon(Icons.add_photo_alternate),
+                label: const Text('Add Image/GIF'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF3BA4E8),
+                  backgroundColor: const Color(0xFF3BA4E8),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
                   ),
@@ -526,7 +527,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     'Media selected: ${isGif ? 'GIF' : 'Image'}',
                     style: AppStyles.exerciseSubtitle.copyWith(
-                      color: Color(0xFF3BA4E8),
+                      color: const Color(0xFF3BA4E8),
                     ),
                   ),
                 ),
@@ -536,7 +537,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel', style: TextStyle(color: Colors.white)),
+            child: const Text('Cancel', style: TextStyle(color: Colors.white)),
           ),
           TextButton(
             onPressed: () {
@@ -568,7 +569,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.pop(context);
               }
             },
-            child: Text('Add', style: TextStyle(color: Colors.white)),
+            child: const Text('Add', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),

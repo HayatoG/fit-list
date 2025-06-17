@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import '../models/workout.dart';
 import '../models/exercise.dart';
@@ -6,13 +7,19 @@ import '../models/exercise.dart';
 class PresetWorkoutsService {
   Future<List<Workout>> loadPresetWorkouts() async {
     try {
-      print('Iniciando carregamento dos treinos pré-definidos');
+      if (kDebugMode) {
+        print('Iniciando carregamento dos treinos pré-definidos');
+      }
       final String jsonString =
           await rootBundle.loadString('assets/preset_workouts.json');
-      print('JSON carregado, tamanho: ${jsonString.length}');
+      if (kDebugMode) {
+        print('JSON carregado, tamanho: ${jsonString.length}');
+      }
       final Map<String, dynamic> jsonMap = json.decode(jsonString);
       final List<dynamic> workoutsJson = jsonMap['workouts'];
-      print('Número de treinos encontrados: ${workoutsJson.length}');
+      if (kDebugMode) {
+        print('Número de treinos encontrados: ${workoutsJson.length}');
+      }
 
       return workoutsJson.map((workoutJson) {
         return Workout(
@@ -40,9 +47,12 @@ class PresetWorkoutsService {
         );
       }).toList();
     } catch (e) {
-      print('Erro ao carregar treinos pré-definidos:');
-      print('Mensagem do erro: $e');
-      print('Stack trace: ${StackTrace.current}');
+      if (kDebugMode) {
+        print('Erro ao carregar treinos pré-definidos:');
+        print('Mensagem do erro: $e');
+        print('Stack trace: ${StackTrace.current}');
+      }
+
       rethrow; // Relançar o erro para tratamento adequado na UI
     }
   }

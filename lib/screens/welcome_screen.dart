@@ -32,21 +32,21 @@ class WelcomeScreen extends StatelessWidget {
                 style: AppStyles.title,
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(
                 'Como você quer começar?',
                 style:
                     AppStyles.subtitle.copyWith(color: AppColors.textSecondary),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 48),
+              const SizedBox(height: 48),
               _buildOptionButton(
                 title: 'Começar do Zero',
                 subtitle: 'Crie seu próprio treino personalizado',
                 icon: Icons.add_circle_outline,
                 onTap: () => _startFromScratch(context),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildOptionButton(
                 title: 'Usar Treino Pronto',
                 subtitle: 'Comece com um treino pré-definido',
@@ -72,7 +72,7 @@ class WelcomeScreen extends StatelessWidget {
         color: AppColors.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: AppColors.divider),
+          side: const BorderSide(color: AppColors.divider),
         ),
         child: InkWell(
           onTap: onTap,
@@ -82,20 +82,20 @@ class WelcomeScreen extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  padding: EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: AppColors.primary,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(icon, color: AppColors.accent, size: 28),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(title, style: AppStyles.buttonText),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Text(
                         subtitle,
                         style: AppStyles.exerciseSubtitle,
@@ -103,7 +103,7 @@ class WelcomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Icon(Icons.arrow_forward_ios,
+                const Icon(Icons.arrow_forward_ios,
                     color: AppColors.accent, size: 16),
               ],
             ),
@@ -121,7 +121,7 @@ class WelcomeScreen extends StatelessWidget {
       _navigateToHome(context);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Erro ao carregar treinos pré-definidos'),
           backgroundColor: Colors.red,
         ),

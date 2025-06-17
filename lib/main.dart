@@ -26,7 +26,7 @@ void main() {
     StoreProvider(
       workoutStore: workoutStore,
       uiStore: uiStore,
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: AppColors.primary,
         scaffoldBackgroundColor: AppColors.background,
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           bodyMedium: TextStyle(color: AppColors.text),
         ),
       ),
@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
         future: _checkPresetWorkouts(context),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           final stores = StoreProvider.of(context);

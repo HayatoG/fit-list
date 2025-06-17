@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 import '../models/workout.dart';
 import '../models/exercise.dart';
@@ -31,34 +32,47 @@ abstract class _WorkoutStore with Store {
   bool get hasWorkouts => workouts.isNotEmpty;
   @action
   Future<void> setWorkouts(List<Workout> newWorkouts) async {
-    print('Iniciando atualização dos workouts...');
+    if (kDebugMode) {
+      print('Iniciando atualização dos workouts...');
+    }
     try {
       runInAction(() {
         workouts.clear();
         workouts.addAll(newWorkouts);
       });
 
-      print('Workouts atualizados: ${workouts.length} workouts');
+      if (kDebugMode) {
+        print('Workouts atualizados: ${workouts.length} workouts');
+      }
       for (var workout in workouts) {
-        print('Workout: ${workout.name} - ${workout.dayOfWeek}');
-        print('Número de exercícios: ${workout.exercises.length}');
+        if (kDebugMode) {
+          print('Workout: ${workout.name} - ${workout.dayOfWeek}');
+          print('Número de exercícios: ${workout.exercises.length}');
+        }
         for (var exercise in workout.exercises) {
-          print('  - Exercício: ${exercise.name}');
-          print('    Sets: ${exercise.sets}, Reps: ${exercise.reps}');
-          print('    Tipo: ${exercise.type}, Categoria: ${exercise.category}');
+          if (kDebugMode) {
+            print('  - Exercício: ${exercise.name}');
+            print('    Sets: ${exercise.sets}, Reps: ${exercise.reps}');
+            print(
+                '    Tipo: ${exercise.type}, Categoria: ${exercise.category}');
+          }
         }
       }
     } catch (e) {
-      print('Erro ao atualizar workouts:');
-      print('Mensagem do erro: $e');
-      print('Stack trace: ${StackTrace.current}');
+      if (kDebugMode) {
+        print('Erro ao atualizar workouts:');
+        print('Mensagem do erro: $e');
+        print('Stack trace: ${StackTrace.current}');
+      }
       rethrow;
     }
   }
 
   @action
   void addWorkout(Workout workout) {
-    print('Adicionando workout: ${workout.name}');
+    if (kDebugMode) {
+      print('Adicionando workout: ${workout.name}');
+    }
     workouts.add(workout);
   }
 
@@ -69,15 +83,21 @@ abstract class _WorkoutStore with Store {
 
   @action
   void addExerciseToWorkout(String workoutId, Exercise exercise) {
-    print('Adicionando exercício ${exercise.name} ao workout ${workoutId}');
+    if (kDebugMode) {
+      print('Adicionando exercício ${exercise.name} ao workout ${workoutId}');
+    }
     final workoutIndex = workouts.indexWhere((w) => w.id == workoutId);
     if (workoutIndex != -1) {
       final workout = workouts[workoutIndex];
       final newExercises = [...workout.exercises, exercise];
       workouts[workoutIndex] = workout.copyWith(exercises: newExercises);
-      print('Exercício adicionado com sucesso');
+      if (kDebugMode) {
+        print('Exercício adicionado com sucesso');
+      }
     } else {
-      print('Workout não encontrado');
+      if (kDebugMode) {
+        print('Workout não encontrado');
+      }
     }
   }
 
