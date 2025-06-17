@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import '../stores/workout_store.dart';
+import '../stores/ui_store.dart';
 import '../models/workout.dart';
 import '../models/exercise.dart';
 import '../constants/weekdays.dart';
@@ -10,8 +11,13 @@ import '../utils/media_helper.dart';
 
 class HomeScreen extends StatefulWidget {
   final WorkoutStore workoutStore;
+  final UIStore uiStore;
 
-  const HomeScreen({Key? key, required this.workoutStore}) : super(key: key);
+  const HomeScreen({
+    Key? key,
+    required this.workoutStore,
+    required this.uiStore,
+  }) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -20,15 +26,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final Map<String, bool> _expandedDays = {};
   final Map<String, bool> _dayCompletionStatus = {};
+  final TextEditingController nameController = TextEditingController();
 
-  final nameController = TextEditingController();
-  final setsController = TextEditingController();
-  final repsController = TextEditingController();
-  final weightController = TextEditingController();
-  String? mediaUrl;
-  bool isGif = false;
+  // Inicializando com valores padrão
   ExerciseType selectedType = ExerciseType.any;
   ExerciseCategory selectedCategory = ExerciseCategory.chest;
+  final TextEditingController setsController = TextEditingController();
+  final TextEditingController repsController = TextEditingController();
+  final TextEditingController weightController = TextEditingController();
+  String? mediaUrl;
+  bool isGif = false;
 
   @override
   void initState() {
@@ -40,33 +47,44 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void dispose() {
+    nameController.dispose();
+    setsController.dispose();
+    repsController.dispose();
+    weightController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text('FitList', style: AppStyles.title),
-        backgroundColor: AppColors.primary,
-        elevation: 0,
-      ),
-      body: Observer(
-        builder: (_) {
-          final workoutsByDay = widget.workoutStore.workoutsByDay;
-          return ListView.builder(
-            padding: EdgeInsets.only(top: 8, bottom: 80),
-            itemCount: weekDays.length,
-            itemBuilder: (context, index) {
-              final day = weekDays[index];
-              final dayWorkouts = workoutsByDay[day.name] ?? [];
-              return _buildDaySection(context, day.name, dayWorkouts);
-            },
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _showAddWorkoutDialog(context),
-        elevation: 2,
-        backgroundColor: AppColors.accent,
-        child: Icon(Icons.add, color: AppColors.primary),
+    return Observer(
+      builder: (_) => Scaffold(
+        backgroundColor: AppColors.background,
+        appBar: AppBar(
+          title: Text('FitList', style: AppStyles.title),
+          backgroundColor: AppColors.primary,
+          elevation: 0,
+        ),
+        body: Observer(
+          builder: (_) {
+            final workoutsByDay = widget.workoutStore.workoutsByDay;
+            return ListView.builder(
+              padding: EdgeInsets.only(top: 8, bottom: 80),
+              itemCount: weekDays.length,
+              itemBuilder: (context, index) {
+                final day = weekDays[index];
+                final dayWorkouts = workoutsByDay[day.name] ?? [];
+                return _buildDaySection(context, day.name, dayWorkouts);
+              },
+            );
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _showAddWorkoutDialog(context),
+          elevation: 2,
+          backgroundColor: AppColors.accent,
+          child: Icon(Icons.add, color: AppColors.primary),
+        ),
       ),
     );
   }

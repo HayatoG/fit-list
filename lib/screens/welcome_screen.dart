@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import '../theme/app_styles.dart';
 import '../services/preset_workouts_service.dart';
+import '../services/preferences_service.dart';
 import 'home_screen.dart';
 import '../stores/workout_store.dart';
+import '../stores/ui_store.dart';
 
 class WelcomeScreen extends StatelessWidget {
   final WorkoutStore workoutStore;
+  final UIStore uiStore;
 
-  const WelcomeScreen({Key? key, required this.workoutStore}) : super(key: key);
+  const WelcomeScreen({
+    Key? key,
+    required this.workoutStore,
+    required this.uiStore,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +44,7 @@ class WelcomeScreen extends StatelessWidget {
                 title: 'Começar do Zero',
                 subtitle: 'Crie seu próprio treino personalizado',
                 icon: Icons.add_circle_outline,
-                onTap: () => _navigateToHome(context),
+                onTap: () => _startFromScratch(context),
               ),
               SizedBox(height: 16),
               _buildOptionButton(
@@ -107,10 +115,9 @@ class WelcomeScreen extends StatelessWidget {
 
   Future<void> _loadPresetWorkouts(BuildContext context) async {
     try {
-      final presets = await PresetWorkoutsService().loadPresetWorkouts();
-      for (var workout in presets) {
-        workoutStore.addWorkout(workout);
-      }
+      final presetWorkouts = await PresetWorkoutsService().loadPresetWorkouts();
+      await workoutStore.setWorkouts(presetWorkouts);
+      await PreferencesService().savePresetWorkoutChoice(true);
       _navigateToHome(context);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -122,10 +129,18 @@ class WelcomeScreen extends StatelessWidget {
     }
   }
 
+  void _startFromScratch(BuildContext context) async {
+    await PreferencesService().savePresetWorkoutChoice(false);
+    _navigateToHome(context);
+  }
+
   void _navigateToHome(BuildContext context) {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => HomeScreen(workoutStore: workoutStore),
+        builder: (context) => HomeScreen(
+          workoutStore: workoutStore,
+          uiStore: uiStore,
+        ),
       ),
     );
   }

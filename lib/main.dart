@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'screens/welcome_screen.dart';
+import 'screens/home_screen.dart';
 import 'stores/workout_store.dart';
+import 'stores/ui_store.dart';
 import 'theme/app_styles.dart';
+import 'services/preferences_service.dart';
+import 'services/preset_workouts_service.dart';
+import 'providers/store_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,46 +19,67 @@ void main() {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(MyApp());
+  final workoutStore = WorkoutStore();
+  final uiStore = UIStore();
+
+  runApp(
+    StoreProvider(
+      workoutStore: workoutStore,
+      uiStore: uiStore,
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  final workoutStore = WorkoutStore();
-
-  MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
+  Future<bool> _checkPresetWorkouts(BuildContext context) async {
+    final stores = StoreProvider.of(context);
+    final hasPresetWorkouts =
+        await PreferencesService().hasPresetWorkoutBeenChosen();
+    if (hasPresetWorkouts) {
+      try {
+        final presets = await PresetWorkoutsService().loadPresetWorkouts();
+        await stores.workoutStore.setWorkouts(presets);
+        return true;
+      } catch (e) {
+        print('Error loading preset workouts: $e');
+        return false;
+      }
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FitList',
       theme: ThemeData(
+        primaryColor: AppColors.primary,
         scaffoldBackgroundColor: AppColors.background,
-        primaryColor: AppColors.accent,
-        colorScheme: ColorScheme.dark(
-          primary: AppColors.accent,
-          secondary: AppColors.accent,
-          surface: AppColors.surface,
-          background: AppColors.background,
-          onPrimary: AppColors.primary,
-          onSecondary: AppColors.primary,
-          onSurface: AppColors.text,
-          onBackground: AppColors.text,
+        textTheme: TextTheme(
+          bodyMedium: TextStyle(color: AppColors.text),
         ),
-        appBarTheme: AppBarTheme(
-          backgroundColor: AppColors.primary,
-          elevation: 0,
-        ),
-        cardColor: AppColors.surface,
-        cardTheme: ThemeData.dark().cardTheme.copyWith(
-              elevation: 0,
-              margin: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-                side: BorderSide(color: AppColors.divider),
-              ),
-            ),
       ),
-      home: WelcomeScreen(workoutStore: workoutStore),
+      home: FutureBuilder<bool>(
+        future: _checkPresetWorkouts(context),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          final stores = StoreProvider.of(context);
+          return stores.workoutStore.hasWorkouts
+              ? HomeScreen(
+                  workoutStore: stores.workoutStore,
+                  uiStore: stores.uiStore,
+                )
+              : WelcomeScreen(
+                  workoutStore: stores.workoutStore,
+                  uiStore: stores.uiStore,
+                );
+        },
+      ),
     );
   }
 }

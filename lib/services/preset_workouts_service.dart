@@ -6,10 +6,13 @@ import '../models/exercise.dart';
 class PresetWorkoutsService {
   Future<List<Workout>> loadPresetWorkouts() async {
     try {
+      print('Iniciando carregamento dos treinos pré-definidos');
       final String jsonString =
           await rootBundle.loadString('assets/preset_workouts.json');
+      print('JSON carregado, tamanho: ${jsonString.length}');
       final Map<String, dynamic> jsonMap = json.decode(jsonString);
       final List<dynamic> workoutsJson = jsonMap['workouts'];
+      print('Número de treinos encontrados: ${workoutsJson.length}');
 
       return workoutsJson.map((workoutJson) {
         return Workout(
@@ -17,7 +20,8 @@ class PresetWorkoutsService {
           name: workoutJson['name'] ?? '',
           dayOfWeek: workoutJson['dayOfWeek'] ?? '',
           notes: workoutJson['notes'],
-          exercises: (workoutJson['exercises'] as List? ?? []).map((exerciseJson) {
+          exercises:
+              (workoutJson['exercises'] as List? ?? []).map((exerciseJson) {
             return Exercise(
               id: exerciseJson['id'] ?? DateTime.now().toString(),
               name: exerciseJson['name'] ?? '',
@@ -25,10 +29,10 @@ class PresetWorkoutsService {
               sets: exerciseJson['sets'] ?? '0',
               reps: exerciseJson['reps'] ?? '0',
               weight: exerciseJson['weight'],
-              timeInSeconds: exerciseJson['timeInSeconds'],
               notes: exerciseJson['notes'],
               type: _parseExerciseType(exerciseJson['type'] ?? 'any'),
-              category: _parseExerciseCategory(exerciseJson['category'] ?? 'chest'),
+              category:
+                  _parseExerciseCategory(exerciseJson['category'] ?? 'chest'),
               mediaUrl: exerciseJson['mediaUrl'],
               isGif: exerciseJson['isGif'] ?? false,
             );
@@ -36,7 +40,9 @@ class PresetWorkoutsService {
         );
       }).toList();
     } catch (e) {
-      print('Error loading preset workouts: $e');
+      print('Erro ao carregar treinos pré-definidos:');
+      print('Mensagem do erro: $e');
+      print('Stack trace: ${StackTrace.current}');
       rethrow; // Relançar o erro para tratamento adequado na UI
     }
   }

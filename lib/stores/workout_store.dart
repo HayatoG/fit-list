@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
 import '../models/workout.dart';
 import '../models/exercise.dart';
+import '../constants/weekdays.dart';
 
 part 'workout_store.g.dart';
 
@@ -8,18 +9,52 @@ class WorkoutStore = _WorkoutStore with _$WorkoutStore;
 
 abstract class _WorkoutStore with Store {
   _WorkoutStore() {
-    // Adiciona um observer para debug
-    autorun((_) {
-      print('Workouts atualizados: ${workouts.length} workouts');
-      for (var workout in workouts) {
-        print(
-            'Workout: ${workout.name} (${workout.exercises.length} exercícios)');
-      }
-    });
+    workouts = ObservableList<Workout>();
   }
 
   @observable
-  ObservableList<Workout> workouts = ObservableList<Workout>();
+  late ObservableList<Workout> workouts;
+
+  @computed
+  Map<String, List<Exercise>> get exercisesByDay {
+    var map = <String, List<Exercise>>{};
+    for (var workout in workouts) {
+      if (map[workout.dayOfWeek] == null) {
+        map[workout.dayOfWeek] = [];
+      }
+      map[workout.dayOfWeek]!.addAll(workout.exercises);
+    }
+    return map;
+  }
+
+  @computed
+  bool get hasWorkouts => workouts.isNotEmpty;
+  @action
+  Future<void> setWorkouts(List<Workout> newWorkouts) async {
+    print('Iniciando atualização dos workouts...');
+    try {
+      runInAction(() {
+        workouts.clear();
+        workouts.addAll(newWorkouts);
+      });
+
+      print('Workouts atualizados: ${workouts.length} workouts');
+      for (var workout in workouts) {
+        print('Workout: ${workout.name} - ${workout.dayOfWeek}');
+        print('Número de exercícios: ${workout.exercises.length}');
+        for (var exercise in workout.exercises) {
+          print('  - Exercício: ${exercise.name}');
+          print('    Sets: ${exercise.sets}, Reps: ${exercise.reps}');
+          print('    Tipo: ${exercise.type}, Categoria: ${exercise.category}');
+        }
+      }
+    } catch (e) {
+      print('Erro ao atualizar workouts:');
+      print('Mensagem do erro: $e');
+      print('Stack trace: ${StackTrace.current}');
+      rethrow;
+    }
+  }
 
   @action
   void addWorkout(Workout workout) {
@@ -65,13 +100,20 @@ abstract class _WorkoutStore with Store {
 
   @computed
   Map<String, List<Workout>> get workoutsByDay {
-    final map = <String, List<Workout>>{};
-    for (final workout in workouts) {
-      if (!map.containsKey(workout.dayOfWeek)) {
-        map[workout.dayOfWeek] = [];
-      }
-      map[workout.dayOfWeek]!.add(workout);
+    var map = <String, List<Workout>>{};
+
+    // Inicializa todos os dias com uma lista vazia
+    for (var day in weekDays) {
+      map[day.name] = [];
     }
+
+    // Adiciona os treinos aos respectivos dias
+    for (var workout in workouts) {
+      if (map[workout.dayOfWeek] != null) {
+        map[workout.dayOfWeek]!.add(workout);
+      }
+    }
+
     return map;
   }
 }

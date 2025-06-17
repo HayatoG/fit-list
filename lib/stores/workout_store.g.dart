@@ -9,6 +9,21 @@ part of 'workout_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$WorkoutStore on _WorkoutStore, Store {
+  Computed<Map<String, List<Exercise>>>? _$exercisesByDayComputed;
+
+  @override
+  Map<String, List<Exercise>> get exercisesByDay =>
+      (_$exercisesByDayComputed ??= Computed<Map<String, List<Exercise>>>(
+              () => super.exercisesByDay,
+              name: '_WorkoutStore.exercisesByDay'))
+          .value;
+  Computed<bool>? _$hasWorkoutsComputed;
+
+  @override
+  bool get hasWorkouts =>
+      (_$hasWorkoutsComputed ??= Computed<bool>(() => super.hasWorkouts,
+              name: '_WorkoutStore.hasWorkouts'))
+          .value;
   Computed<Map<String, List<Workout>>>? _$workoutsByDayComputed;
 
   @override
@@ -26,11 +41,23 @@ mixin _$WorkoutStore on _WorkoutStore, Store {
     return super.workouts;
   }
 
+  bool _workoutsIsInitialized = false;
+
   @override
   set workouts(ObservableList<Workout> value) {
-    _$workoutsAtom.reportWrite(value, super.workouts, () {
+    _$workoutsAtom
+        .reportWrite(value, _workoutsIsInitialized ? super.workouts : null, () {
       super.workouts = value;
+      _workoutsIsInitialized = true;
     });
+  }
+
+  late final _$setWorkoutsAsyncAction =
+      AsyncAction('_WorkoutStore.setWorkouts', context: context);
+
+  @override
+  Future<void> setWorkouts(List<Workout> newWorkouts) {
+    return _$setWorkoutsAsyncAction.run(() => super.setWorkouts(newWorkouts));
   }
 
   late final _$_WorkoutStoreActionController =
@@ -84,6 +111,8 @@ mixin _$WorkoutStore on _WorkoutStore, Store {
   String toString() {
     return '''
 workouts: ${workouts},
+exercisesByDay: ${exercisesByDay},
+hasWorkouts: ${hasWorkouts},
 workoutsByDay: ${workoutsByDay}
     ''';
   }
